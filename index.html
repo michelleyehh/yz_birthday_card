@@ -4,8 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Birthday! 🎂</title>
+    <title>給羽蓁寶寶的一封信💌</title>
     <style>
+        @font-face {
+            font-family: 'jf-openhuninn';
+            src: url('https://cdn.jsdelivr.net/gh/justfont/open-huninn-font@master/font/jf-openhuninn-2.0.ttf') format('truetype');
+            font-display: swap;
+            /* 確保字體載入期間文字不會空白 */
+        }
+
         :root {
             --env-bg: #fdfbfb;
             --env-back: #e06c81;
@@ -32,7 +39,7 @@
             height: 100vh;
             overflow: hidden;
             background: linear-gradient(135deg, var(--env-bg) 0%, #ebedee 100%);
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'jf-openhuninn', 'Helvetica Neue', Arial, sans-serif;
             position: fixed;
             /* 防止 iOS 橡皮筋回彈效應 */
         }
@@ -113,7 +120,7 @@
         }
 
         /* =======================================
-           修改區塊：信封翻蓋與吉伊卡哇封蠟
+           信封翻蓋與吉伊卡哇封蠟
            ======================================= */
         /* 翻蓋容器 (不裁切，負責 3D 翻轉) */
         .env-flap-wrapper {
@@ -149,7 +156,7 @@
             height: 65px;
             background-color: rgba(0, 0, 0, 0.3);
             /* 對應原圖背景 */
-            background-image: url('sister.png');
+            background-image: url('./sister.png');
             background-size: cover;
             background-position: center;
             border: 1px solid #fff;
@@ -177,7 +184,7 @@
         }
 
         /* =======================================
-           第二階段：滿版信紙場景
+           第二階段：滿版信紙場景 (左文圖錯落排版)
            ======================================= */
         .fullscreen-card {
             position: absolute;
@@ -190,10 +197,10 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 1s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            padding: 3rem 2rem 4rem 2rem;
-            justify-content: center;
+            /* 讓信紙內容如果太長可以滑動 */
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         .fullscreen-card.show {
@@ -201,37 +208,115 @@
             pointer-events: auto;
         }
 
-        .photo-placeholder {
+        /* 增加一個內層容器，確保內容置中且有呼吸空間 */
+        .card-scroll-wrapper {
+            min-height: 100%;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            /* 改為從上往下排，因為內容變多了 */
+        }
+
+        .content-container {
             width: 100%;
-            height: 35vh;
-            min-height: 250px;
-            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            border-radius: 16px;
-            margin-bottom: 2rem;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        /* --- 修改區塊：新版共用拍立得基礎樣式 --- */
+        .polaroid {
+            width: 45%;
+            /* 佔據 45% 的寬度 */
+            max-width: 180px;
+            background: #fff;
+            padding: 8px;
+            padding-bottom: 38px;
+            /* 下方留白空間給文字 */
+            border-radius: 3px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            position: relative;
+            z-index: 2;
+            /* 確保浮於文字之上 */
+        }
+
+        /* 右側拍立得 */
+        .polaroid.right {
+            float: right;
+            margin: 5px 0 15px 15px;
+            /* 左側和下方留白 */
+            transform: rotate(4deg);
+            /* 往右傾斜 */
+        }
+
+        /* 左側拍立得 */
+        .polaroid.left {
+            float: left;
+            margin: 10px 15px 15px 0;
+            /* 右側和下方留白 */
+            transform: rotate(-3deg);
+            /* 往左傾斜 */
+        }
+
+        .polaroid-img-1 {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            /* 強制直式比例 */
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
             font-weight: bold;
-            font-size: 1.1rem;
-            box-shadow: 0 10px 20px rgba(255, 117, 140, 0.15);
-            /* background-image: url('你的照片網址.jpg'); */
+            font-size: 0.9rem;
+            text-align: center;
+
+            /* 若要套用照片，把這行註解解開 */
+            background-image: url('./S__49037330_0.jpg');
             background-size: cover;
             background-position: center;
         }
 
-        .text-section h2 {
-            color: var(--env-front);
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
+        .polaroid-img-2 {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            /* 強制直式比例 */
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+
+            /* 若要套用照片，把這行註解解開 */
+            background-image: url('./S__49037329_0.jpg');
+            background-size: cover;
+            background-position: center;
         }
 
+        /* 拍立得下方的文字區塊 */
+        .polaroid-caption {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--env-front);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* --- 文字區塊 --- */
         .text-section p {
             color: var(--text-color);
-            line-height: 1.8;
+            line-height: 2;
             margin-bottom: 1rem;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            text-align: justify;
+            /* 讓左右文字對齊得更平整 */
         }
 
         .signature {
@@ -240,6 +325,10 @@
             color: var(--env-flap) !important;
             font-size: 1.1rem !important;
             margin-top: 2rem;
+            padding-bottom: 2rem;
+            /* 底部多留點空間 */
+            clear: both;
+            /* 確保署名永遠被推到最底部，不受浮動照片影響 */
         }
 
         /* 彩帶特效 */
@@ -292,7 +381,7 @@
             </div>
             <div class="env-front"></div>
 
-            <!-- 倒三角形翻蓋與封蠟 (替換原本的結構) -->
+            <!-- 倒三角形翻蓋與封蠟 -->
             <div class="env-flap-wrapper" id="envFlap">
                 <div class="flap-triangle"></div>
                 <div class="wax-seal"></div> <!-- 你的吉伊卡哇會出現在這裡 -->
@@ -303,14 +392,41 @@
 
         <!-- 2. 滿版信紙場景 -->
         <div class="fullscreen-card" id="fullCard">
-            <div class="photo-placeholder">
-                放一張你們最可愛的合照吧！
-            </div>
-            <div class="text-section">
-                <h2>🎉 生日快樂！ 🎉</h2>
-                <p>給最棒的閨蜜：</p>
-                <p>又陪妳長大了一歲！謝謝妳一直以來的陪伴，無論是開心還是難過的時候，都有妳在身邊。<br><br>願妳新的一年每天都閃閃發光，做自己最喜歡的樣子！✨</p>
-                <p class="signature">愛妳的 妙妙屋 ❤️</p>
+            <div class="card-scroll-wrapper">
+                <div class="content-container">
+
+                    <!-- 第一張：右側的拍立得照片 -->
+                    <div class="polaroid right">
+                        <div class="polaroid-img-1"></div>
+                        <div class="polaroid-caption">可愛寶寶GET!!</div>
+                    </div>
+
+                    <!-- 左側的文字內容 (上半段) -->
+                    <div class="text-section">
+                        <p>
+                            給我最愛的寶寶：
+                            <br />我的寶23歲生日快樂辣～
+                            <br />恭喜妳發現了這個秘密卡片！這個網頁是特別為了妳而設計的，專屬於妳的那種噢，希望有驚喜到妳，嘻嘻！！
+                            <br />很期待未來一起解鎖新事物的我們，也很期待畢業後住在一起的每一天，能一直有妳也一直有我，我的相簿要一直新增妳的照片🤪🥰💗
+                        </p>
+
+                        <!-- 第二張：左側的拍立得照片 (插入在文字中段) -->
+                        <div class="polaroid left">
+                            <div class="polaroid-img-2"></div>
+                            <div class="polaroid-caption">我們又一起畢業辣 💕</div>
+                        </div>
+
+                        <!-- 繼續接下來的文字內容 (下半段) -->
+                        <p>
+                            未來的道路上我們互相加油，希望妳能心想事成，一次就能考上你夢想的職業，我會默默的幫妳加油打氣的！
+                            <br />友情的路上謝謝一直都有妳的陪伴和支持，很高興能成為妳最好的閨蜜，希望我們能一直是好閨蜜直到老，互相看到對方結婚，幸福的過每一天🤭❤️
+                            <br />願未來新的一年每天都閃閃發光，做自己最喜歡的樣子，成為最善良的那一顆星！💖💖
+                        </p>
+
+                        <p class="signature">愛妳的葉寶❤️</p>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
